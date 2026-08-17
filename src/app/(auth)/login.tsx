@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    StyleSheet,
+    Alert,
+    KeyboardAvoidingView,
+    Platform,
+    Pressable
+} from 'react-native';
 import { Link } from 'expo-router';
 import { useAuth } from '../context/AuthContext';
 
@@ -44,9 +53,9 @@ export default function LoginScreen() {
                     onChangeText={setPassword}
                 />
 
-                <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                <Pressable style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Log In</Text>
-                </TouchableOpacity>
+                </Pressable>
 
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Don't have an account? </Text>

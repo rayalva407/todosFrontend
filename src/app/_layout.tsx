@@ -1,7 +1,8 @@
+// app/_layout.tsx
 import { useEffect } from 'react';
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, View, StyleSheet } from 'react-native';
 
 function RootLayoutNav() {
   const { user, isLoading } = useAuth();
@@ -11,20 +12,19 @@ function RootLayoutNav() {
   useEffect(() => {
     if (isLoading) return;
 
-    // Check if the current visible route is inside the (auth) folder
-    const inAuthGroup = segments[0] === '(auth)';
+    const inAuthGroup = segments[0] === '(app)';
 
-    if (!user && !inAuthGroup) {
-      router.replace('/(auth)/login');
-    } else if (user && inAuthGroup) {
+    if (!user && inAuthGroup) {
+      router.replace('/login');
+    } else if (user && !inAuthGroup) {
       router.replace('/(app)');
     }
   }, [user, isLoading, segments]);
 
   if (isLoading) {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator size="large" color="#007AFF" />
+        <View style={styles.center}>
+          <ActivityIndicator size="large" />
         </View>
     );
   }
@@ -39,3 +39,11 @@ export default function RootLayout() {
       </AuthProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
